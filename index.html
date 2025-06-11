@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="main-container">
+  <h1 class="title">
+    <span class="white-text">Lost</span><span class="orange-text">@</span><span class="white-text">Campus</span>
+  </h1>
+
+  <div class="button-group">
+    <a href="{{ url_for('register') }}" class="main-button">📌 습득물 등록</a>
+    <a href="{{ url_for('search') }}" class="main-button">🔍 분실물 검색</a>
+    <a href="{{ url_for('found') }}" class="main-button">✅ 찾았어요!</a>
+  </div>
+</div>
+{% endblock %}

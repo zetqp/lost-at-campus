@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>검색 결과</title>
+</head>
+<body>
+    <h2>검색 결과</h2>
+    {% if items %}
+        <ul>
+            {% for item in items %}
+                <li>{{ item.name }} - {{ item.location }} - {{ item.date }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>검색 결과가 없습니다.</p>
+    {% endif %}
+    <a href="{{ url_for('search') }}">검색 페이지로 돌아가기</a><br>
+    <a href="{{ url_for('index') }}">메인으로 돌아가기</a>
+</body>
+</html>

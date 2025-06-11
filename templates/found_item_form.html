@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>습득물 등록</title>
+</head>
+<body>
+    <h2>📌 습득물 등록</h2>
+    <form method="post" action="{{ url_for('found_item') }}">
+        <label>물품 이름: <input type="text" name="name" required></label><br>
+        <label>습득 위치: <input type="text" name="location" required></label><br>
+        <label>습득 날짜: <input type="date" name="date" required></label><br>
+        <label>특이사항: <input type="text" name="details"></label><br>
+        <label>연락망: <input type="text" name="contact"></label><br>
+        <button type="submit">등록하기</button>
+    </form>
+    <a href="{{ url_for('index') }}">메인으로 돌아가기</a>
+</body>
+</html>

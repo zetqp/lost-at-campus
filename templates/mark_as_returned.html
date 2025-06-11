@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>✅ 찾았어요!</title>
+</head>
+<body>
+    <h2>✅ 찾았어요!</h2>
+    <form method="post" action="{{ url_for('mark_returned') }}">
+        <p>반환된 물품 선택:</p>
+        {% for i, item in data %}
+            <input type="checkbox" name="selected_items" value="{{ i }}">
+            {{ item.name }} - {{ item.location }} - {{ item.date }}<br>
+        {% endfor %}
+        <button type="submit">반환 처리</button>
+    </form>
+    <a href="{{ url_for('index') }}">메인으로 돌아가기</a>
+</body>
+</html>

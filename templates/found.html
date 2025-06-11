@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="form-container">
+    <h2>✅ 찾았어요!</h2>
+    <form method="POST">
+        <label>키워드 (물품명):</label>
+        <input type="text" name="keyword" required>
+
+        <label>연락처:</label>
+        <input type="text" name="contact" required>
+
+        <button type="submit">삭제 요청</button>
+    </form>
+
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+</div>
+{% endblock %}

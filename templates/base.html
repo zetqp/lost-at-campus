@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Lost@Campus</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1><span class="black">Lost</span><span class="orange">@</span><span class="black">Campus</span></h1>
+        <nav>
+            <a href="{{ url_for('home') }}">🏠 홈</a>
+            <a href="{{ url_for('register') }}">📌 습득물 등록</a>
+            <a href="{{ url_for('search') }}">🔍 분실물 검색</a>
+            <a href="{{ url_for('found') }}">✅ 찾았어요!</a>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

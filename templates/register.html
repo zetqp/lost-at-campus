@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="form-container">
+    <h2>📌 습득물 등록</h2>
+    <form method="POST">
+        <label>습득물 이름:</label>
+        <input type="text" name="item_name" required>
+
+        <label>습득 위치:</label>
+        <input type="text" name="location" required>
+
+        <label>습득 날짜:</label>
+        <input type="date" name="date" required>
+
+        <label>특이사항:</label>
+        <textarea name="note" rows="4"></textarea>
+
+        <label>연락처:</label>
+        <input type="text" name="contact" required>
+
+        <button type="submit">등록하기</button>
+    </form>
+</div>
+{% endblock %}

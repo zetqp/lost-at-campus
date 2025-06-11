@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>분실물 검색</title>
+</head>
+<body>
+    <h2>🔍 분실물 검색</h2>
+    <form method="post" action="{{ url_for('search') }}">
+        <input type="text" name="keyword" placeholder="검색어를 입력하세요" required>
+        <button type="submit">검색</button>
+    </form>
+    <a href="{{ url_for('index') }}">메인으로 돌아가기</a>
+</body>
+</html>
