@@ -52,5 +52,7 @@ def found():
             message = '일치하는 정보가 없습니다.'
     return render_template('found.html', message=message)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
