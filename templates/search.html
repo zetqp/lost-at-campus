@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>분실물 검색</title>
+  <meta charset="UTF-8" />
+  <title>분실물 검색 - Lost@Campus</title>
 </head>
 <body>
-  <h1>분실물 검색</h1>
-  <form method="GET">
-    <label>검색어: <input type="text" name="keyword" required></label>
+  <h1>🔍 분실물 검색</h1>
+  <form method="POST">
+    <input type="text" name="keyword" placeholder="키워드 입력" required>
     <button type="submit">검색</button>
   </form>
-  
+
+  <hr>
+
   {% if items %}
-    <h2>검색 결과:</h2>
     <ul>
-      {% for item in items %}
-        <li>
-          <strong>{{ item['item_name'] }}</strong><br>
-          장소: {{ item['location'] }}<br>
-          날짜: {{ item['date'] }}<br>
-          특이사항: {{ item['notes'] }}<br>
-          연락처: {{ item['contact'] }}<br>
-          {% if item['photo_filename'] %}
-            <img src="{{ url_for('static', filename='uploaded_photos/' ~ item['photo_filename']) }}" width="200"><br>
-          {% endif %}
-        </li>
-        <hr>
-      {% endfor %}
+    {% for item in items %}
+      <li>
+        <strong>{{ item[1] }}</strong> - {{ item[2] }} - {{ item[3] }}<br>
+        특이사항: {{ item[4] }}<br>
+        연락처: {{ item[5] }}<br>
+        {% if item[6] %}
+          <img src="{{ url_for('static', filename='uploaded_photos/' + item[6]) }}" alt="사진" style="max-width:200px; max-height:200px;">
+        {% endif %}
+      </li>
+    {% endfor %}
     </ul>
-  {% elif keyword %}
+  {% else %}
     <p>검색 결과가 없습니다.</p>
   {% endif %}
+
+  <a href="/">홈으로</a>
 </body>
 </html>

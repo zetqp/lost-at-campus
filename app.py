@@ -1,95 +1,108 @@
-from flask import Flask, render_template, request
-import sqlite3
 import os
+import sqlite3
+from flask import Flask, render_template, request, redirect, url_for
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'static/uploaded_photos'
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 최대 16MB 업로드 제한
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 # DB 초기화 함수
 def init_db():
     conn = sqlite3.connect('data.db')
     c = conn.cursor()
-    c.execute('''
-        CREATE TABLE IF NOT EXISTS items (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            item_name TEXT,
-            location TEXT,
-            date TEXT,
-            notes TEXT,
-            contact TEXT
-        )
-    ''')
+    c.execute('''CREATE TABLE IF NOT EXISTS items (
+                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                 name TEXT NOT NULL,
+                 location TEXT,
+                 date TEXT,
+                 notes TEXT,
+                 contact TEXT,
+                 photo_filename TEXT)''')
     conn.commit()
     conn.close()
 
-# 서버 시작 시 DB 초기화
-init_db()
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# 습득물 등록
+@app.route('/')
+def home():
+    return render_template('home.html')
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        item_name = request.form['item_name']
+        name = request.form['name']
         location = request.form['location']
         date = request.form['date']
         notes = request.form['notes']
         contact = request.form['contact']
+        photo = request.files.get('photo')
+
+        photo_filename = None
+        if photo and allowed_file(photo.filename):
+            filename = secure_filename(photo.filename)
+            photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            photo_filename = filename
 
         conn = sqlite3.connect('data.db')
         c = conn.cursor()
-        c.execute('''
-            INSERT INTO items (item_name, location, date, notes, contact)
-            VALUES (?, ?, ?, ?, ?)
-        ''', (item_name, location, date, notes, contact))
+        c.execute('INSERT INTO items (name, location, date, notes, contact, photo_filename) VALUES (?, ?, ?, ?, ?, ?)',
+                  (name, location, date, notes, contact, photo_filename))
         conn.commit()
         conn.close()
-
         return render_template('thankyou.html')
+
     return render_template('register.html')
 
-# 분실물 검색
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-    results = []
+    items = []
     if request.method == 'POST':
         keyword = request.form['keyword']
         conn = sqlite3.connect('data.db')
         c = conn.cursor()
-        c.execute('''
-            SELECT * FROM items
-            WHERE item_name LIKE ? OR location LIKE ? OR notes LIKE ?
-        ''', (f'%{keyword}%', f'%{keyword}%', f'%{keyword}%'))
-        results = c.fetchall()
+        query = "SELECT * FROM items WHERE name LIKE ? OR location LIKE ? OR notes LIKE ?"
+        like_keyword = f'%{keyword}%'
+        c.execute(query, (like_keyword, like_keyword, like_keyword))
+        items = c.fetchall()
         conn.close()
-    return render_template('search.html', results=results)
+    return render_template('search.html', items=items)
 
-# 찾았어요 (삭제 기능)
 @app.route('/found', methods=['GET', 'POST'])
 def found():
+    items = []
     message = ''
     if request.method == 'POST':
         keyword = request.form['keyword']
         contact = request.form['contact']
         conn = sqlite3.connect('data.db')
         c = conn.cursor()
-        c.execute('''
-            DELETE FROM items
-            WHERE (item_name LIKE ? OR location LIKE ? OR notes LIKE ?)
-            AND contact = ?
-        ''', (f'%{keyword}%', f'%{keyword}%', f'%{keyword}%', contact))
+        # 삭제 쿼리 (키워드와 연락처 모두 일치하는 항목 삭제)
+        c.execute("DELETE FROM items WHERE (name LIKE ? OR location LIKE ? OR notes LIKE ?) AND contact = ?",
+                  (f'%{keyword}%', f'%{keyword}%', f'%{keyword}%', contact))
+        deleted = c.rowcount
         conn.commit()
-        if c.rowcount > 0:
-            message = '등록된 정보가 삭제되었습니다.'
-        else:
-            message = '일치하는 정보가 없습니다.'
+        # 삭제 후 전체 목록 조회
+        c.execute("SELECT * FROM items")
+        items = c.fetchall()
         conn.close()
-    return render_template('found.html', message=message)
+        if deleted > 0:
+            message = f"{deleted}개의 항목이 삭제되었습니다."
+        else:
+            message = "조건에 맞는 항목이 없습니다."
 
-# 메인 페이지
-@app.route('/')
-def home():
-    return render_template('home.html')
+    else:
+        conn = sqlite3.connect('data.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM items")
+        items = c.fetchall()
+        conn.close()
 
-# 배포용
+    return render_template('found.html', items=items, message=message)
+
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=False)
+    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+    init_db()
+    app.run(debug=True)

@@ -1,18 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>찾았어요!</title>
+  <meta charset="UTF-8" />
+  <title>찾았어요! - Lost@Campus</title>
 </head>
 <body>
-  <h1>찾았어요!</h1>
+  <h1>✅ 찾았어요!</h1>
   <form method="POST">
-    <label>물품명 또는 장소: <input type="text" name="keyword" required></label><br>
-    <label>연락처: <input type="text" name="contact" required></label><br>
-    <button type="submit">찾았어요!</button>
+    <input type="text" name="keyword" placeholder="키워드 입력" required>
+    <input type="text" name="contact" placeholder="연락처 입력" required>
+    <button type="submit">삭제</button>
   </form>
 
-  {% if message %}
-    <p>{{ message }}</p>
+  <p>{{ message }}</p>
+
+  <hr>
+
+  {% if items %}
+    <ul>
+    {% for item in items %}
+      <li>
+        <strong>{{ item[1] }}</strong> - {{ item[2] }} - {{ item[3] }}<br>
+        특이사항: {{ item[4] }}<br>
+        연락처: {{ item[5] }}<br>
+        {% if item[6] %}
+          <img src="{{ url_for('static', filename='uploaded_photos/' + item[6]) }}" alt="사진" style="max-width:200px; max-height:200px;">
+        {% endif %}
+      </li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>등록된 항목이 없습니다.</p>
   {% endif %}
+
+  <a href="/">홈으로</a>
 </body>
 </html>
