@@ -1,53 +1,99 @@
+/* 전체 레이아웃 */
 body {
-  background-color: white;
-  color: black;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  padding: 40px;
+  background-color: #ffffff;
+  color: #222;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
 }
 
+/* 중앙 컨테이너 */
+.container {
+  width: 100%;
+  max-width: 700px;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+/* 헤더 */
 h1 {
-  font-size: 2.5em;
-  margin-bottom: 30px;
+  font-size: 2.5rem;
+  margin: 30px 0;
+  color: #000;
+  text-align: center;
 }
 
-h1 span.orange {
+h1 .orange {
   color: orange;
 }
 
-form input, form button {
-  font-size: 1em;
-  padding: 8px;
-  margin: 5px;
-  width: 250px;
+/* 폼 스타일 */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
 }
 
-form button {
+input[type="text"],
+input[type="date"],
+input[type="file"],
+button {
+  font-size: 1rem;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 버튼 */
+button {
   background-color: orange;
-  color: white;
+  color: #fff;
   border: none;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: darkorange;
   cursor: pointer;
 }
 
-form button:hover {
-  background-color: darkorange;
-}
-
+/* 결과 목록 */
 ul {
   list-style: none;
   padding: 0;
+  width: 100%;
 }
 
 ul li {
-  margin: 20px auto;
-  max-width: 600px;
-  text-align: left;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
+  background: #f9f9f9;
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
 img {
-  margin-top: 10px;
+  max-width: 100%;
+  height: auto;
   border-radius: 8px;
+  margin-top: 10px;
 }
 
+/* 링크 */
+a {
+  color: orange;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
