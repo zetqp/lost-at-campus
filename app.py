@@ -1,58 +1,71 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
+import csv
+import os
 
 app = Flask(__name__)
 
-found_items = []
+DATA_FILE = 'data.csv'
 
-@app.route('/', endpoint='home')  # <- 여기서 'home'이라는 엔드포인트 이름 부여
-def index():
-    return render_template('index.html')
+@app.route('/')
+def home():
+    return render_template('home.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        item = {
-            'item_name': request.form.get('item_name', ''),
-            'location': request.form.get('location', ''),
-            'date': request.form.get('date', ''),
-            'note': request.form.get('note', ''),
-            'contact': request.form.get('contact', ''),
-        }
-        found_items.append(item)
-        print("등록된 아이템 리스트:", found_items)
-        return render_template('thankyou.html', item=item)
+        item_name = request.form['item_name']
+        location = request.form['location']
+        date = request.form['date']
+        notes = request.form['notes']
+        contact = request.form['contact']
+
+        with open(DATA_FILE, 'a', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow([item_name, location, date, notes, contact])
+
+        return render_template('thankyou.html')
     return render_template('register.html')
 
-@app.route('/search', methods=['GET', 'POST'])
+@app.route('/search', methods=['GET'])
 def search():
+    keyword = request.args.get('keyword', '').strip()
     results = []
-    if request.method == 'POST':
-        keyword = request.form.get('search_keyword', '').lower()
-        results = [
-            item for item in found_items
-            if keyword in item['item_name'].lower() or keyword in item['location'].lower()
-        ]
-        print("검색 결과 개수:", len(results))
-    return render_template('search.html', results=results)
+
+    if os.path.exists(DATA_FILE):
+        with open(DATA_FILE, 'r', encoding='utf-8') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                if keyword.lower() in ','.join(row).lower():
+                    results.append(row)
+
+    return render_template('search.html', results=results, keyword=keyword)
 
 @app.route('/found', methods=['GET', 'POST'])
 def found():
     message = ''
     if request.method == 'POST':
-        keyword = request.form.get('keyword', '').lower()
-        contact = request.form.get('contact', '')
-        initial_len = len(found_items)
-        found_items[:] = [
-            item for item in found_items
-            if not (keyword in item['item_name'].lower() and item['contact'] == contact)
-        ]
-        if len(found_items) < initial_len:
-            message = '정상적으로 삭제되었습니다.'
-        else:
-            message = '일치하는 정보가 없습니다.'
+        keyword = request.form['keyword'].strip()
+        contact = request.form['contact'].strip()
+
+        if os.path.exists(DATA_FILE):
+            with open(DATA_FILE, 'r', encoding='utf-8') as f:
+                rows = list(csv.reader(f))
+            new_rows = []
+            found_match = False
+            for row in rows:
+                if keyword.lower() in ','.join(row).lower() and contact == row[-1]:
+                    found_match = True
+                else:
+                    new_rows.append(row)
+
+            if found_match:
+                with open(DATA_FILE, 'w', newline='', encoding='utf-8') as f:
+                    writer = csv.writer(f)
+                    writer.writerows(new_rows)
+                message = '찾아주셔서 감사합니다!'
+            else:
+                message = '일치하는 정보가 없습니다.'
     return render_template('found.html', message=message)
 
-if __name__ == "__main__":
-    import os
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=False)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)

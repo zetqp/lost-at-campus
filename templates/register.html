@@ -1,24 +1,17 @@
-{% extends 'base.html' %}
-{% block content %}
-<div class="form-container">
-    <h2>📌 습득물 등록</h2>
-    <form method="POST">
-        <label>습득물 이름:</label>
-        <input type="text" name="item_name" required>
-
-        <label>습득 위치:</label>
-        <input type="text" name="location" required>
-
-        <label>습득 날짜:</label>
-        <input type="date" name="date" required>
-
-        <label>특이사항:</label>
-        <textarea name="note" rows="4"></textarea>
-
-        <label>연락처:</label>
-        <input type="text" name="contact" required>
-
-        <button type="submit">등록하기</button>
-    </form>
-</div>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>습득물 등록</title>
+</head>
+<body>
+  <h1>습득물 등록</h1>
+  <form method="POST">
+    <label>물품명: <input type="text" name="item_name" required></label><br>
+    <label>장소: <input type="text" name="location" required></label><br>
+    <label>날짜: <input type="date" name="date" required></label><br>
+    <label>특이사항: <textarea name="notes"></textarea></label><br>
+    <label>연락처: <input type="text" name="contact" required></label><br><br>
+    <button type="submit">등록하기</button>
+  </form>
+</body>
+</html>

@@ -1,26 +1,25 @@
-{% extends 'base.html' %}
-{% block content %}
-<div class="form-container">
-    <h2>🔍 분실물 검색</h2>
-    <form method="POST">
-        <label>검색어 입력 (물품명 또는 장소):</label>
-        <input type="text" name="search_keyword" required>
-        <button type="submit">검색</button>
-    </form>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>분실물 검색</title>
+</head>
+<body>
+  <h1>분실물 검색</h1>
+  <form method="get">
+    <input type="text" name="keyword" placeholder="검색어를 입력하세요" required>
+    <button type="submit">검색</button>
+  </form>
 
-    {% if results %}
-        <h3>검색 결과:</h3>
-        {% for item in results %}
-        <div class="result-item">
-            <strong>이름:</strong> {{ item.item_name }}<br>
-            <strong>위치:</strong> {{ item.location }}<br>
-            <strong>날짜:</strong> {{ item.date }}<br>
-            <strong>특이사항:</strong> {{ item.note }}<br>
-            <strong>연락처:</strong> {{ item.contact }}
-        </div>
-        {% endfor %}
-    {% elif request.method == 'POST' %}
-        <p>검색 결과가 없습니다.</p>
-    {% endif %}
-</div>
-{% endblock %}
+  {% if results %}
+    <h2>검색 결과:</h2>
+    <ul>
+      {% for row in results %}
+        <li>{{ row[0] }} | {{ row[1] }} | {{ row[2] }} | {{ row[3] }} | {{ row[4] }}</li>
+      {% endfor %}
+    </ul>
+  {% elif keyword %}
+    <p>검색 결과가 없습니다.</p>
+  {% endif %}
+</body>
+</html>
+
