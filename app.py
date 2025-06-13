@@ -79,12 +79,10 @@ def found():
         contact = request.form['contact']
         conn = sqlite3.connect('data.db')
         c = conn.cursor()
-        # 삭제 쿼리 (키워드와 연락처 모두 일치하는 항목 삭제)
         c.execute("DELETE FROM items WHERE (name LIKE ? OR location LIKE ? OR notes LIKE ?) AND contact = ?",
                   (f'%{keyword}%', f'%{keyword}%', f'%{keyword}%', contact))
         deleted = c.rowcount
         conn.commit()
-        # 삭제 후 전체 목록 조회
         c.execute("SELECT * FROM items")
         items = c.fetchall()
         conn.close()
@@ -92,7 +90,6 @@ def found():
             message = f"{deleted}개의 항목이 삭제되었습니다."
         else:
             message = "조건에 맞는 항목이 없습니다."
-
     else:
         conn = sqlite3.connect('data.db')
         c = conn.cursor()
@@ -102,7 +99,9 @@ def found():
 
     return render_template('found.html', items=items, message=message)
 
+
 if __name__ == '__main__':
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
     init_db()
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 10000))  # Render 호환
+    app.run(host='0.0.0.0', port=port)
