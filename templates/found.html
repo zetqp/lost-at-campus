@@ -5,11 +5,12 @@
 </head>
 <body>
   <h1>찾았어요!</h1>
-  <form method="post">
-    <label>키워드: <input type="text" name="keyword" required></label><br>
+  <form method="POST">
+    <label>물품명 또는 장소: <input type="text" name="keyword" required></label><br>
     <label>연락처: <input type="text" name="contact" required></label><br>
-    <button type="submit">확인</button>
+    <button type="submit">찾았어요!</button>
   </form>
+
   {% if message %}
     <p>{{ message }}</p>
   {% endif %}

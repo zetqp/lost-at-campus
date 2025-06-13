@@ -5,16 +5,26 @@
 </head>
 <body>
   <h1>분실물 검색</h1>
-  <form method="get">
-    <input type="text" name="keyword" placeholder="검색어를 입력하세요" required>
+  <form method="GET">
+    <label>검색어: <input type="text" name="keyword" required></label>
     <button type="submit">검색</button>
   </form>
-
-  {% if results %}
+  
+  {% if items %}
     <h2>검색 결과:</h2>
     <ul>
-      {% for row in results %}
-        <li>{{ row[0] }} | {{ row[1] }} | {{ row[2] }} | {{ row[3] }} | {{ row[4] }}</li>
+      {% for item in items %}
+        <li>
+          <strong>{{ item['item_name'] }}</strong><br>
+          장소: {{ item['location'] }}<br>
+          날짜: {{ item['date'] }}<br>
+          특이사항: {{ item['notes'] }}<br>
+          연락처: {{ item['contact'] }}<br>
+          {% if item['photo_filename'] %}
+            <img src="{{ url_for('static', filename='uploaded_photos/' ~ item['photo_filename']) }}" width="200"><br>
+          {% endif %}
+        </li>
+        <hr>
       {% endfor %}
     </ul>
   {% elif keyword %}
@@ -22,4 +32,3 @@
   {% endif %}
 </body>
 </html>
-
