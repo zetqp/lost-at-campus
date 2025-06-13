@@ -103,5 +103,5 @@ def found():
 if __name__ == '__main__':
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
     init_db()
-    port = int(os.environ.get('PORT', 10000))  # Render 호환
+    port = int(os.environ.get('PORT', 10000))  # Render가 지정하는 포트 사용
     app.run(host='0.0.0.0', port=port)
