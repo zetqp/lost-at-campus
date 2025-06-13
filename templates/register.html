@@ -1,21 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>습득물 등록 - Lost@Campus</title>
+  <meta charset="UTF-8">
+  <title>습득물 등록</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-  <h1>📌 습득물 등록</h1>
-  <form method="POST" enctype="multipart/form-data">
-    <label>물건 이름: <input type="text" name="name" required></label><br>
-    <label>장소: <input type="text" name="location"></label><br>
-    <label>날짜: <input type="date" name="date"></label><br>
-    <label>특이사항: <textarea name="notes"></textarea></label><br>
-    <label>연락처: <input type="text" name="contact" required></label><br>
-    <label>사진 첨부: <input type="file" name="photo" accept="image/*"></label><br>
-    <button type="submit">등록</button>
+  <h1>
+    <span>📌</span>
+    <span>습득물 등록</span>
+  </h1>
+
+  <form method="post" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="물건 이름" required><br><br>
+    <input type="text" name="location" placeholder="습득 장소"><br><br>
+    <input type="date" name="date"><br><br>
+    <input type="text" name="notes" placeholder="특이사항"><br><br>
+    <input type="text" name="contact" placeholder="연락처" required><br><br>
+    <input type="file" name="photo" accept="image/*"><br><br>
+    <button type="submit">등록하기</button>
   </form>
 
+  <br>
   <a href="/">홈으로</a>
 </body>
 </html>

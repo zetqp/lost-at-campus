@@ -7,12 +7,30 @@ body {
 }
 
 h1 {
-  font-size: 3em;
+  font-size: 2.5em;
   margin-bottom: 30px;
 }
 
 h1 span.orange {
   color: orange;
+}
+
+form input, form button {
+  font-size: 1em;
+  padding: 8px;
+  margin: 5px;
+  width: 250px;
+}
+
+form button {
+  background-color: orange;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: darkorange;
 }
 
 ul {
@@ -21,16 +39,15 @@ ul {
 }
 
 ul li {
-  margin: 20px 0;
-  font-size: 1.5em;
+  margin: 20px auto;
+  max-width: 600px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
 }
 
-a {
-  text-decoration: none;
-  color: black;
-}
-
-a:hover {
-  color: orange;
+img {
+  margin-top: 10px;
+  border-radius: 8px;
 }
 

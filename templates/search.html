@@ -1,34 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>분실물 검색 - Lost@Campus</title>
+  <meta charset="UTF-8">
+  <title>분실물 검색</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
   <h1>🔍 분실물 검색</h1>
-  <form method="POST">
-    <input type="text" name="keyword" placeholder="키워드 입력" required>
+
+  <form method="post">
+    <input type="text" name="keyword" placeholder="검색어 입력" required>
     <button type="submit">검색</button>
   </form>
 
-  <hr>
-
-  {% if items %}
-    <ul>
+  <ul>
     {% for item in items %}
       <li>
-        <strong>{{ item[1] }}</strong> - {{ item[2] }} - {{ item[3] }}<br>
-        특이사항: {{ item[4] }}<br>
-        연락처: {{ item[5] }}<br>
+        <strong>{{ item[1] }}</strong> - {{ item[2] }} ({{ item[3] }})<br>
+        {{ item[4] }} / 연락처: {{ item[5] }}<br>
         {% if item[6] %}
-          <img src="{{ url_for('static', filename='uploaded_photos/' + item[6]) }}" alt="사진" style="max-width:200px; max-height:200px;">
+          <img src="{{ url_for('static', filename='uploaded_photos/' ~ item[6]) }}" width="150"><br>
         {% endif %}
       </li>
+      <hr>
     {% endfor %}
-    </ul>
-  {% else %}
-    <p>검색 결과가 없습니다.</p>
-  {% endif %}
+  </ul>
 
   <a href="/">홈으로</a>
 </body>
