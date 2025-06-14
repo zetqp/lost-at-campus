@@ -1,15 +1,15 @@
 {% include 'header.html' %}
-<div class="container">
-  <h2>습득물 등록</h2>
-  <form method="post" enctype="multipart/form-data">
-    <input type="text" name="name" placeholder="물품명" required>
-    <input type="text" name="location" placeholder="습득 장소">
+
+<div class="form-container">
+  <h2>📌 습득물 등록</h2>
+  <form method="POST" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="물품 이름" required>
+    <input type="text" name="location" placeholder="습득 위치">
     <input type="date" name="date">
-    <textarea name="notes" placeholder="특이사항"></textarea>
+    <input type="text" name="notes" placeholder="특이사항">
     <input type="text" name="contact" placeholder="연락처" required>
-    <input type="file" name="photo">
+    <input type="file" name="photo" accept="image/*">
     <button type="submit">등록하기</button>
   </form>
-  <br>
-  <a href="/">← 홈으로 돌아가기</a>
+  <a class="home-link" href="/">← 홈으로</a>
 </div>

@@ -1,19 +1,23 @@
 {% include 'header.html' %}
-<div class="container">
-  <h2>찾았어요!</h2>
-  <form method="post">
-    <input type="text" name="keyword" placeholder="키워드 입력">
-    <input type="text" name="contact" placeholder="연락처 입력">
-    <button type="submit">삭제</button>
+
+<div class="form-container">
+  <h2>✅ 찾았어요!</h2>
+  <form method="POST">
+    <input type="text" name="keyword" placeholder="키워드 입력" required>
+    <input type="text" name="contact" placeholder="연락처 입력" required>
+    <button type="submit">삭제하기</button>
   </form>
   <p>{{ message }}</p>
-  <ul>
-    {% for item in items %}
-    <li>{{ item[1] }} | {{ item[2] }} | {{ item[3] }} | {{ item[4] }} | {{ item[5] }}
-      {% if item[6] %}<br><img src="/static/uploaded_photos/{{ item[6] }}" style="max-width:200px;">{% endif %}
-    </li>
-    {% endfor %}
-  </ul>
-  <br>
-  <a href="/">← 홈으로 돌아가기</a>
+  <a class="home-link" href="/">← 홈으로</a>
+</div>
+
+<div class="item-list">
+  {% for item in items %}
+    <div class="item">
+      <strong>{{ item[1] }}</strong> | {{ item[2] }} | {{ item[3] }}<br>
+      {{ item[4] }}<br>
+      연락처: {{ item[5] }}<br>
+      {% if item[6] %}<img src="{{ url_for('static', filename='uploaded_photos/' ~ item[6]) }}" height="100">{% endif %}
+    </div>
+  {% endfor %}
 </div>
