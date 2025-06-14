@@ -1,34 +1,19 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>찾았어요!</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-  <h1>✅ 찾았어요!</h1>
-
+{% include 'header.html' %}
+<div class="container">
+  <h2>찾았어요!</h2>
   <form method="post">
-    <input type="text" name="keyword" placeholder="물건 이름 또는 장소" required>
-    <input type="text" name="contact" placeholder="연락처" required>
+    <input type="text" name="keyword" placeholder="키워드 입력">
+    <input type="text" name="contact" placeholder="연락처 입력">
     <button type="submit">삭제</button>
   </form>
-
   <p>{{ message }}</p>
-
   <ul>
     {% for item in items %}
-      <li>
-        <strong>{{ item[1] }}</strong> - {{ item[2] }} ({{ item[3] }})<br>
-        {{ item[4] }} / 연락처: {{ item[5] }}<br>
-        {% if item[6] %}
-          <img src="{{ url_for('static', filename='uploaded_photos/' ~ item[6]) }}" width="150"><br>
-        {% endif %}
-      </li>
-      <hr>
+    <li>{{ item[1] }} | {{ item[2] }} | {{ item[3] }} | {{ item[4] }} | {{ item[5] }}
+      {% if item[6] %}<br><img src="/static/uploaded_photos/{{ item[6] }}" style="max-width:200px;">{% endif %}
+    </li>
     {% endfor %}
   </ul>
-
-  <a href="/">홈으로</a>
-</body>
-</html>
+  <br>
+  <a href="/">← 홈으로 돌아가기</a>
+</div>

@@ -1,14 +1,13 @@
 import os
 import sqlite3
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'static/uploaded_photos'
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 최대 16MB 업로드 제한
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
-# DB 초기화 함수
 def init_db():
     conn = sqlite3.connect('data.db')
     c = conn.cursor()
@@ -86,10 +85,7 @@ def found():
         c.execute("SELECT * FROM items")
         items = c.fetchall()
         conn.close()
-        if deleted > 0:
-            message = f"{deleted}개의 항목이 삭제되었습니다."
-        else:
-            message = "조건에 맞는 항목이 없습니다."
+        message = f"{deleted}개의 항목이 삭제되었습니다." if deleted > 0 else "조건에 맞는 항목이 없습니다."
     else:
         conn = sqlite3.connect('data.db')
         c = conn.cursor()
@@ -99,9 +95,7 @@ def found():
 
     return render_template('found.html', items=items, message=message)
 
-
 if __name__ == '__main__':
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
     init_db()
-    port = int(os.environ.get('PORT', 10000))  # Render가 지정하는 포트 사용
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=10000)

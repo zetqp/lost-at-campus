@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
   <meta charset="UTF-8">
   <title>Lost@Campus</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <h1>
-    <span>Lost</span>
-    <span class="orange">@</span>
-    <span>Campus</span>
-  </h1>
-
-  <ul>
-    <li><a href="/register">📌 습득물 등록</a></li>
-    <li><a href="/search">🔍 분실물 검색</a></li>
-    <li><a href="/found">✅ 찾았어요!</a></li>
-  </ul>
+  <header>
+    <h1><span style="color: black;">Lost</span><span style="color: orange;">@</span><span style="color: black;">Campus</span></h1>
+  </header>
+  <nav>
+    <a href="/register">📌 습득물 등록</a>
+    <a href="/search">🔍 분실물 검색</a>
+    <a href="/found">✅ 찾았어요!</a>
+  </nav>
+  <div class="container">
+    <h2 style="color: orange;">연세대학교 분실물 서비스입니다<br>필요한 창으로 이동해주세요!</h2>
+  </div>
 </body>
 </html>
