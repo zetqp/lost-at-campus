@@ -97,3 +97,53 @@ a {
 a:hover {
   text-decoration: underline;
 }
+/* 이미 있던 전역 스타일 아래에 덧붙이기 ───────────────── */
+.form-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #fafafa;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.form-container h2 {
+  margin-bottom: 25px;
+  font-size: 1.6rem;
+}
+
+.form-container input,
+.form-container textarea,
+.form-container button {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.form-container button {
+  background: orange;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.form-container button:hover {
+  background: darkorange;
+}
+
+/* 홈 버튼 */
+.home-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: 600;
+  color: orange;
+  text-decoration: none;
+}
+.home-link:hover { text-decoration: underline; }
