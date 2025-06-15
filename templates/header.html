@@ -1,8 +1,53 @@
-<header>
-  <h1><span style="color: black;">Lost</span><span style="color: orange;">@</span><span style="color: black;">Campus</span></h1>
-</header>
-<nav>
-  <a href="/register">📌 습득물 등록</a>
-  <a href="/search">🔍 분실물 검색</a>
-  <a href="/found">✅ 찾았어요!</a>
-</nav>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lost@Campus</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+  <style>
+    body {
+      padding: 2rem;
+    }
+    .header-title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    .header-title span {
+      color: orange;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .container-box {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 2rem;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      background: #f9f9f9;
+    }
+    .home-link {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    button, input, textarea {
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="header-title">
+    Lost<span>@</span>Campus
+  </div>
+  <nav>
+    <a href="{{ url_for('register') }}">📌 습득물 등록</a>
+    <a href="{{ url_for('search') }}">🔍 분실물 검색</a>
+    <a href="{{ url_for('found') }}">✅ 찾았어요!</a>
+  </nav>
+

@@ -1,27 +1,21 @@
 {% include 'header.html' %}
-
-<div class="form-container">
-  <h2>✅ 찾았어요!</h2>
-  <form method="POST">
-    <input  type="text" name="keyword"  placeholder="물품 이름/장소" required>
-    <input  type="text" name="contact"  placeholder="등록 시 입력한 연락처" required>
-    <button type="submit">삭제하기</button>
-  </form>
-  <p>{{ message }}</p>
-  <a class="home-link" href="/">← 홈으로 돌아가기</a>
-</div>
-
-<div class="form-container">
-  <h2 style="margin-top:0">현재 등록된 목록</h2>
-  {% for item in items %}
-    <div style="margin-bottom:20px">
-      <strong>{{ item[1] }}</strong> / {{ item[2] }} / {{ item[3] }}<br>
-      {{ item[4] }}<br>☎ {{ item[5] }}
-      {% if item[6] %}
-        <br><img src="{{ url_for('static', filename='uploaded_photos/' ~ item[6]) }}"
-                 style="max-width:150px;border-radius:6px;margin-top:8px">
-      {% endif %}
-    </div>
-    <hr>
-  {% endfor %}
-</div>
+<div class="container">
+    <h2>✅ 찾았어요!</h2>
+    <form method="POST">
+        <input type="text" name="keyword" placeholder="물품명, 장소, 특이사항" required>
+        <input type="text" name="contact" placeholder="연락처" required>
+        <input type="submit" value="삭제하기">
+    </form>
+    <p>{{ message }}</p>
+    {% if items %}
+        <ul>
+            {% for item in items %}
+                <li>
+                    <strong>{{ item[1] }}</strong> - {{ item[2] }} ({{ item[3] }})<br>
+                    {{ item[4] }} / {{ item[5] }}
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <div class="
