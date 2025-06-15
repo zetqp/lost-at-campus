@@ -1,20 +1,26 @@
 {% include 'header.html' %}
-<div class="container-box">
-  <h4>📌 습득물 등록</h4>
-  <form method="POST">
-    <label>물건 이름</label>
-    <input type="text" name="name" required>
-    <label>습득 위치</label>
-    <input type="text" name="location">
-    <label>습득 날짜</label>
-    <input type="date" name="date">
-    <label>특이사항</label>
-    <textarea name="notes"></textarea>
-    <label>연락처</label>
-    <input type="text" name="contact" required>
-    <button type="submit">등록</button>
+
+<div class="container">
+  <h2>📌 습득물 등록</h2>
+
+  <!-- enctype 추가(사진 업로드) -->
+  <form method="POST" enctype="multipart/form-data">
+    <input  type="text"  name="name"      placeholder="물품명"       required>
+    <input  type="text"  name="location"  placeholder="습득 장소">
+    <input  type="date"  name="date"      placeholder="습득 일자">
+    <textarea name="notes" rows="3" placeholder="특이사항"></textarea>
+    <input  type="text"  name="contact"   placeholder="연락처"      required>
+
+    <!-- ⬇ 사진 업로드 필드 복원 -->
+    <input  type="file"  name="photo"     accept="image/*">
+
+    <input  type="submit" value="등록하기">
   </form>
+
+  <div class="home-button">
+    <a href="{{ url_for('home') }}"><button>🏠 홈으로 돌아가기</button></a>
+  </div>
 </div>
-<div class="home-link"><a href="{{ url_for('home') }}">🏠 홈으로 돌아가기</a></div>
+
 </body>
 </html>

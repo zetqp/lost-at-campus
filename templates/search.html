@@ -1,24 +1,35 @@
 {% include 'header.html' %}
+
 <div class="container">
-    <h2>🔍 분실물 검색</h2>
-    <form method="POST">
-        <input type="text" name="keyword" placeholder="물품명, 장소, 특이사항 등" required>
-        <input type="submit" value="검색하기">
-    </form>
-    {% if items %}
-        <ul>
-            {% for item in items %}
-                <li>
-                    <strong>{{ item[1] }}</strong> - {{ item[2] }} ({{ item[3] }})<br>
-                    {{ item[4] }} / {{ item[5] }}
-                </li>
-                <hr>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    <div class="home-button">
-        <a href="{{ url_for('home') }}"><button>🏠 홈으로 돌아가기</button></a>
-    </div>
+  <h2>🔍 분실물 검색</h2>
+
+  <form method="POST">
+    <input type="text" name="keyword" placeholder="물품명, 장소, 특이사항 등" required>
+    <input type="submit" value="검색하기">
+  </form>
+
+  {% if items %}
+    <ul style="list-style:none;padding:0;">
+      {% for item in items %}
+        <li style="margin-bottom:25px;">
+          <strong>{{ item.name }}</strong> — {{ item.location }} ({{ item.date }})<br>
+          {{ item.notes }} / ☎ {{ item.contact }}<br>
+
+          {# ⬇ 사진이 있으면 썸네일 출력 #}
+          {% if item.photo_filename %}
+            <img src="{{ url_for('static', filename='uploaded_photos/' ~ item.photo_filename) }}"
+                 style="max-width:150px;border-radius:6px;margin-top:8px">
+          {% endif %}
+        </li>
+        <hr>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div class="home-button">
+    <a href="{{ url_for('home') }}"><button>🏠 홈으로 돌아가기</button></a>
+  </div>
 </div>
+
 </body>
 </html>
